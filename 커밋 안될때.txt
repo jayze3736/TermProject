@@ -1,0 +1,2 @@
+git push origin main(O)
+git push origin master(X)

@@ -56,7 +56,7 @@ void InitExtInt(){
 void InitTimer0(){
 	
 	//TO DO
-	TCCR0 = 0x04;
+	TCCR0 = 0x04; //64 prescaler
 	TIMSK = 0x01;
 }
 
