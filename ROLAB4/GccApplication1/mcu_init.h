@@ -14,7 +14,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#define F_CPU 16000000UL
+#define F_CPU 16000000UL //CPU Å¬·°, MCU 
 #include <util/delay.h>
 
 

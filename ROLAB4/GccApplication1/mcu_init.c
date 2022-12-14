@@ -56,8 +56,8 @@ void InitExtInt(){
 void InitTimer0(){
 	
 	//TO DO
-	TCCR0 = 0x04; //64 prescaler
-	TIMSK = 0x01;
+	TCCR0 = 0x04; //64 prescaler, 0b0000 0100
+	TIMSK = 0x01; //
 }
 
 
@@ -71,9 +71,13 @@ void InitTimer0(){
 void InitTimer1(){
 	
 	//TO DO
-	TCCR1A = 0b11100010;
-	TCCR1B = 0b00010001;
-		
+	TCCR1A = 0b11100010; //
+	//0b11(set OCR) 10(Clear OCn on Compare match at bottom) 00 10
+	//WGM11 WGM10 10
+	
+	TCCR1B = 0b00010001; 
+	//0b00 0 10 001; WGM13 WGm12 10 CS12 CS11 CS10 001(1 no prescale)
+	// PWM, TOP ICR, Update OCR = TOP
 	ICR1 = 399;
 	OCR1C = 0;
 	
