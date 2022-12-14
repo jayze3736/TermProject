@@ -326,9 +326,11 @@ int main(void){
 					if(check == g_PacketBuffer.data.check){
 
 						switch(g_PacketBuffer.data.mode){
-
+								
+							//수신 부분: case 2: 정상적으로 수신했을때
 							case 2:
-							// 이 변수들 확인해서 사용 - 어떻게 확인?
+							// 이 변수들 확인해서 사용 - 어떻게 확인? -> 현재 ODE에서 값을 보내면 g_Pdes. gVlmit, g_Climit 값이 바뀜
+								// 이후에 atmega에서 송신을 수행하면 해당값을 echo로 보내줌
 							g_Pdes = g_PacketBuffer.data.pos / 1000.;
 							g_Vlimit = g_PacketBuffer.data.velo / 1000.;
 							g_Climit = g_PacketBuffer.data.cur / 1000.;
@@ -348,7 +350,8 @@ int main(void){
 				}
 			}
 		}
-
+	    
+		// 송신 부분: atmega128에서 현재 pos, velo, cur값을 전송
 		if(g_SendFlag > 19){
 			g_SendFlag = 0;			
 
@@ -358,6 +361,7 @@ int main(void){
 			packet.data.mode = 3;
 			packet.data.check = 0;
 			
+			//만약 현재 모터의 값을 받아오게 하고 싶으면 이부분을 수정해야함. g_Vlimit, g_Climit, g_Pdes가 아닌 g_Vcurrent, g_Ccurrent, g_Pcurrent
 			packet.data.pos = g_Pdes * 1000; 
 			packet.data.velo = g_Vlimit * 1000;
 			packet.data.cur = g_Climit * 1000;  
