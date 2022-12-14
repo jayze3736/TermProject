@@ -262,7 +262,7 @@ int main(void){
 	InitSPI();
 	
 	//Timer
-	InitTimer0(); //256 prescaler
+	InitTimer0(); 
 	InitTimer1();
 	InitTimer3();
 
