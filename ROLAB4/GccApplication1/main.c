@@ -142,16 +142,6 @@ t = 64/16M = 0.000004
 
 
 
-//PWM 제어
-ISR(TIMER1_OVF_vect){
-	
-//여기다가 TCNT1 설정
-	
-
-	
-}
-
-
 
 //ISR(TIMER3_OVF_vect){
 // 제어기 구현,  TIMER는 먼저 1ms로 돌아감 //0.001048의 제어주기
