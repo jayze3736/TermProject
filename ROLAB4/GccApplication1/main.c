@@ -63,6 +63,7 @@ volatile unsigned char g_ID = 1;
 // 1번 타이머 ,모터 관련 부분
 void SetDutyCW(double v){
 	
+	//TCNT1가 0에 머물러있으면 무한반복하며 OCR 값을 설정하지않음
 	while(TCNT1  == 0);
 
 	int ocr = v * (200. / 24.) + 200; // v는 전압을 의미
@@ -144,7 +145,8 @@ t = 64/16M = 0.000004
 //PWM 제어
 ISR(TIMER1_OVF_vect){
 	
-
+//여기다가 TCNT1 설정
+	
 
 	
 }
