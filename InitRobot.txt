@@ -1,0 +1,130 @@
+void InitRobot()
+
+{
+
+
+
+	//TO DO
+
+	//Body 설정
+
+	dMass mass;
+
+	dMatrix3 R;
+
+
+
+	//질량중심점
+
+	dReal x[MAX_JOINT_NUM + 1] = { 0.00, 0.50, 1.25 };
+
+	dReal y[MAX_JOINT_NUM + 1] = { 0.0, 0.0, 0.0 };
+
+	dReal z[MAX_JOINT_NUM + 1] = { 0.25, 0.5, 0.5 };
+
+
+
+	//링크 자세 - q가 rad, x,y,z = 1 on 0 off
+
+	dReal ori_x[MAX_JOINT_NUM + 1] = { 0.0, 0.0, 0.0 };
+
+	dReal ori_y[MAX_JOINT_NUM + 1] = { 0.0, 1.0, 1.0 };
+
+	dReal ori_z[MAX_JOINT_NUM + 1] = { 1.0, 0.0, 0.0 };
+
+	dReal ori_q[MAX_JOINT_NUM + 1] = { 0.0, 90*DEG2RAD, 90 * DEG2RAD };
+
+
+	//림 한덩이 링크 길이
+
+	dReal length[MAX_JOINT_NUM + 1] = { 0.5, 1.0, 0.5 };
+
+
+
+	//한덩이 무게
+	dReal weight[MAX_JOINT_NUM + 1] = { 1.0,1.0, 1.0 };
+
+
+
+	//캡슐의 반지름
+	dReal r[MAX_JOINT_NUM + 1];
+
+	for (int i = 0; i < MAX_JOINT_NUM + 1; i++)
+
+		r[i] = 0.125;
+
+
+
+	//Body 생성
+
+	for (int i = 0; i < MAX_JOINT_NUM + 1; i++)
+
+	{
+
+		g_oObj[i].body = dBodyCreate(g_World);
+
+		dBodySetPosition(g_oObj[i].body, x[i], y[i], z[i]);
+
+		dMassSetZero(&mass);
+
+		dMassSetCapsuleTotal(&mass, weight[i], 1, r[i], length[i]);
+
+		dBodySetMass(g_oObj[i].body, &mass);
+
+		g_oObj[i].geom = dCreateCapsule(g_Space, r[i], length[i]);
+
+		dGeomSetBody(g_oObj[i].geom, g_oObj[i].body);
+
+		dRFromAxisAndAngle(R, ori_x[i], ori_y[i], ori_z[i], ori_q[i]);
+
+		dBodySetRotation(g_oObj[i].body, R);
+
+	}
+
+	///////////////////////////////////////////////////////////
+
+	//각 조인트의 회전축의 위치
+
+	dReal c_x[MAX_JOINT_NUM + 1] = { 0.0, 0.0, 1.0 };
+
+	dReal c_y[MAX_JOINT_NUM + 1] = { 0.0, 0.0, 0.0 };
+
+	dReal c_z[MAX_JOINT_NUM + 1] = { 0.0, 0.5, 0.5 };
+
+
+
+	//회전축의 로테이션 방향
+
+	dReal axis_x[MAX_JOINT_NUM + 1] = { 0.0, 0.0, 0.0 };
+
+	dReal axis_y[MAX_JOINT_NUM + 1] = { 0.0, 0.0, 0.0 };
+
+	dReal axis_z[MAX_JOINT_NUM + 1] = { 1.0, 1.0, 1.0 };
+
+
+
+	//고정 축 설정
+
+	g_oJoint[0] = dJointCreateFixed(g_World, 0);
+
+	dJointAttach(g_oJoint[0], 0, g_oObj[0].body);
+
+	dJointSetFixed(g_oJoint[0]);
+
+	//조인트 설정
+
+	for (int i = 1; i < MAX_JOINT_NUM + 1; i++)
+
+	{
+
+		g_oJoint[i] = dJointCreateHinge(g_World, 0);
+
+		dJointAttach(g_oJoint[i], g_oObj[i].body, g_oObj[i - 1].body);
+
+		dJointSetHingeAnchor(g_oJoint[i], c_x[i], c_y[i], c_z[i]);
+
+		dJointSetHingeAxis(g_oJoint[i], axis_x[i], axis_y[i], axis_z[i]);
+
+	}
+
+}
