@@ -183,7 +183,7 @@ ISR(TIMER0_OVF_vect){
 	
 	
 	//TO DO: 아마도 TIMER의 주기일듯
-	// 100번 카운트 될때마다 초기화 - 1ms마다 1번 카운트됨 100*1ms = 0.1s
+	// 100번 카운트 될때마다 초기화 0.5ms *100 = 50ms
 	if((g_TimerCnt % 100) == 0){
 		
 		g_TimerCnt = 0;
