@@ -79,7 +79,7 @@ void InitTimer1(){
 	//0b00 0 10 001; WGM13 WGm12 10 CS12 CS11 CS10 001(1 no prescale)
 	// PWM, TOP ICR, Update OCR = TOP
 	
-	//추가자: 정석현 - TOP값이 ICR이고 OCR과 TOP이 같을때 인터럽트 발생, 
+	//추가자: 정석현 - TOP값이 ICR이고 OCR과 TOP이 같을때 인터럽트 발생, Phase Correct mode
 	ICR1 = 399;
 	OCR1C = 0;
 	
