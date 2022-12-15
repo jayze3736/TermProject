@@ -215,7 +215,7 @@ ISR(TIMER0_OVF_vect){
 	g_Ccur = -( ((g_ADC / 1024. * 5.) - 2.5) * 10.); //현재 측정한 전류값
 	g_Cerr = g_Cdes - g_Ccur; //전류 오차
 
-	// 0.1: K_p, 1.5: K_i
+	// 0.1: K_p, 1.5: K_i 제어기 게인은 실제 시스템에 따라서 바뀔 수 있는 부분이라고 함
 	cur_control = g_Cerr * 0.1 + g_Cerr_sum * 1.5; //현재 입력값
 	cur_control += g_Vcur * 0.0683; //0.0683은 토크 상수, g_Vcur은 측정한 모터 속도값
 	
