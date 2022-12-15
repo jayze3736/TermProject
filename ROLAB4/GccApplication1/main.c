@@ -142,7 +142,7 @@ t = 64/16M = 0.000004
 
 
 //PWM 제어
-ISR(TIMER3_OVF_vect){
+ISR(TIMER1_OVF_vect){
 	
 
 
@@ -215,8 +215,8 @@ ISR(TIMER0_OVF_vect){
 	g_Ccur = -( ((g_ADC / 1024. * 5.) - 2.5) * 10.); //현재 측정한 전류값
 	g_Cerr = g_Cdes - g_Ccur; //전류 오차
 
-	// 0.1: K_p, 1.5: K_i 제어기 게인은 실제 시스템에 따라서 바뀔 수 있는 부분이라고 함
-	cur_control = g_Cerr * 0.1 + g_Cerr_sum * 1.5; //현재 입력값
+	// 0.1: K_p, 1.5: K_i 제어기 게인은 실제 시스템에 따라서 바뀔 수 있는 부분이라고 함, 매트랩 맹신 ㄴㄴ
+	cur_control = g_Cerr * 0.1 + g_Cerr_sum * 1.5; //현재 입력값 
 	cur_control += g_Vcur * 0.0683; //0.0683은 토크 상수, g_Vcur은 측정한 모터 속도값
 	
 	g_Cerr_sum += g_Cerr;
@@ -224,6 +224,7 @@ ISR(TIMER0_OVF_vect){
 	// Kp_c(전류 제어기 p gain): 0.8268428 = 0.827
 	// Kp_i: 2,211.616
 	// Kp_a: 1.0 / Kp_c = 1.0 / 0.827
+	// 근데 코드에서는 P gain이 0.0827
 	// g_Cerr_sum은 오차를 적분한 결과에 해당
 	// g_Cerr 자체는 전류 오차를 의미
 	//I-term anti - Q1) 입력 전류가 24V여서 (I게인은 각 제어기의 제어주기를 곱해서 사용)
